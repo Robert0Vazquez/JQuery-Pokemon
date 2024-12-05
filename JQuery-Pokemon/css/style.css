@@ -1,0 +1,78 @@
+/* --------------------------------------------------- */
+/* Personalizar navbar con bordes y sombras */
+/* --------------------------------------------------- */
+.navbar-custom {
+    /* border: 2px solid #343a40; /* Borde gris */
+    border-top: 0px;
+    border-radius: 5px; /* Bordes redondeados */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Sombra suave */
+    /* background-color: #343a40; Fondo oscuro, el mismo que el body */
+    background-color: #004457;
+}
+
+.navbar-custom .navbar-nav .nav-link {
+    font-size: 1.40rem; /* Agrandar el texto */
+}
+
+
+/*-------------------------------------------------------*/
+/* Estilo personalizado para las tarjetas de Pokemones*/
+/* --------------------------------------------------- */
+.custom-card {
+    border: 2px solid #343a40; /* Mismo borde que el navbar */
+    border-radius: 10px; /* Bordes redondeados */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3); /* Sombra suave */
+    background-color: #343a40; /* Fondo oscuro */
+    overflow: hidden; /* Asegura que las imágenes no sobresalgan */
+}
+
+.custom-card .card-title {
+    font-size: 1.5rem; /* Tamaño del texto */
+    font-weight: bold;
+    color: whitesmoke; /* Texto oscuro */
+}
+
+.custom-card img {
+    border-bottom: 2px solid #ffc107; /* Borde inferior dorado */
+    max-height: 12rem; /* Tamaño máximo de la imagen */
+    object-fit: cover; /* Asegura que la imagen se ajuste correctamente */
+}
+
+.custom-card a {
+    color: #ffc107; /* Botón con borde y texto dorado */
+}
+
+.custom-card a:hover {
+    background-color: #ffc107; /* Fondo dorado al pasar el mouse */
+    color: #343a40; /* Texto oscuro */
+}
+
+/* --------------------------------------------------- */
+/* Estilo para colocar el fuego de la cola del main */
+/* --------------------------------------------------- */
+/* Define el contenedor principal con posición relativa */
+.position-relative {
+    position: relative;
+}
+
+/* Estiliza la imagen de Charizard */
+.charizard {
+    width: 100%; /* Ajusta el tamaño de la imagen */
+    height: 100%;
+}
+
+/* Estiliza y posiciona la imagen del fuego */
+.fire {
+    position: absolute;
+    bottom: 22%; /* Ajusta la distancia desde la parte inferior */
+    left: 8%; /* Ajusta la distancia desde la izquierda */
+    width: 15%; /* Ajusta el tamaño del fuego */
+    height: auto;
+    pointer-events: none; /* Evita que el fuego interfiera con clics */
+}
+
+
+.dropdown-menu .dropdown-item:hover {
+    color: black; /* Cambia el color del texto a negro */
+    background-color: #343a40; /* Opcional: cambia el fondo para resaltar */
+}
