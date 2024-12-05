@@ -1,8 +1,80 @@
 $(document).ready(function () {
     myfunction();
     loadFilters(); // Cargar los filtros al iniciar
+    createPokemonModal(); // Crear el modal al cargar la página
 });
 
+// Crear el modal de Pokémon con JavaScript
+function createPokemonModal() {
+    const modal = document.createElement("div");
+    modal.id = "pokemonModal";
+    modal.classList.add("modal", "fade");
+    modal.setAttribute("tabindex", "-1");
+    modal.setAttribute("aria-labelledby", "pokemonModalLabel");
+    modal.setAttribute("aria-hidden", "true");
+
+    const modalDialog = document.createElement("div");
+    modalDialog.classList.add("modal-dialog");
+
+    const modalContent = document.createElement("div");
+    modalContent.classList.add("modal-content", "bg-dark");
+
+    const modalHeader = document.createElement("div");
+    modalHeader.classList.add("modal-header");
+
+    const modalTitle = document.createElement("h5");
+    modalTitle.classList.add("modal-title", "text-white");
+    modalTitle.id = "pokemonModalLabel";
+    modalTitle.textContent = "Detalles del Pokémon";
+
+    const closeButton = document.createElement("button");
+    closeButton.classList.add("btn-close");
+    closeButton.setAttribute("type", "button");
+    closeButton.setAttribute("data-bs-dismiss", "modal");
+    closeButton.setAttribute("aria-label", "Close");
+
+    modalHeader.appendChild(modalTitle);
+    modalHeader.appendChild(closeButton);
+
+    const modalBody = document.createElement("div");
+    modalBody.classList.add("modal-body");
+
+    const pokemonName = document.createElement("h3");
+    pokemonName.classList.add("text-center", "text-white");
+    pokemonName.id = "pokemonName";
+
+    const evolutionHeader = document.createElement("h5");
+    evolutionHeader.classList.add("text-center", "text-white");
+    evolutionHeader.textContent = "Evoluciones";
+
+    const evolutionContainer = document.createElement("div");
+    evolutionContainer.id = "evolutionContainer";
+    evolutionContainer.classList.add("d-flex", "justify-content-center", "mb-4", "text-white");
+
+    const statsHeader = document.createElement("h5");
+    statsHeader.classList.add("text-center", "text-white");
+    statsHeader.textContent = "Estadísticas";
+
+    const radarChartCanvas = document.createElement("canvas");
+    radarChartCanvas.id = "statRadarChart";
+
+    modalBody.appendChild(pokemonName);
+    modalBody.appendChild(evolutionHeader);
+    modalBody.appendChild(evolutionContainer);
+    modalBody.appendChild(statsHeader);
+    modalBody.appendChild(radarChartCanvas);
+
+    modalContent.appendChild(modalHeader);
+    modalContent.appendChild(modalBody);
+
+    modalDialog.appendChild(modalContent);
+    modal.appendChild(modalDialog);
+
+    // Agregar el modal al body de la página
+    document.body.appendChild(modal);
+}
+
+// Cargar los datos de los Pokémon
 async function myfunction() {
     try {
         const jsonDatos = await getDatos();
@@ -10,16 +82,173 @@ async function myfunction() {
         const cardContent = $("#cardContent");
 
         for (let pokemon of pokemones) {
-            const pokemonDetails = await getImgPokemon(pokemon.name);
+            const pokemonDetails = await getPokemonDetails(pokemon.name);
             const pokemonImg = pokemonDetails.sprites.front_default;
 
             // Crear una tarjeta por cada Pokémon
             const card = createCard(pokemon.name, pokemonImg);
             cardContent.append(card);
+
+            // Evento para mostrar el modal con las estadísticas
+            card.click(() => showPokemonDetails(pokemon.name));
         }
     } catch (err) {
         console.error("Error al obtener los datos: " + err);
     }
+}
+
+// Obtener los detalles del Pokémon (incluyendo sus estadísticas)
+async function getPokemonDetails(name) {
+    const response = await $.ajax({
+        url: `https://pokeapi.co/api/v2/pokemon/${name}`,
+        method: "GET",
+        dataType: "json"
+    });
+    return response;
+}
+
+// Mostrar los detalles y estadísticas en el modal
+function showPokemonDetails(name) {
+    getPokemonDetails(name).then(data => {
+        // Mostrar el nombre del Pokémon en el modal
+        $("#pokemonName").text(data.name);
+
+        //Mostrar las evoluciones
+        displayEvolutions(data.id),
+
+        // Llamar a la función para crear el gráfico de radar
+        createRadarChart(data.stats);
+        
+        // Mostrar el modal
+        $('#pokemonModal').modal('show');
+    });
+}
+
+// Función para mostrar las evoluciones
+async function displayEvolutions(pokemonId) {
+    try {
+        const speciesResponse = await $.ajax({
+            url: `https://pokeapi.co/api/v2/pokemon-species/${pokemonId}`,
+            method: "GET",
+            dataType: "json"
+        });
+
+        const evolutionChainUrl = speciesResponse.evolution_chain.url;
+        const evolutionData = await $.ajax({
+            url: evolutionChainUrl,
+            method: "GET",
+            dataType: "json"
+        });
+
+        const evolutions = getEvolutions(evolutionData.chain);
+        const evolutionContainer = $("#evolutionContainer");
+        evolutionContainer.empty();  // Limpiar evoluciones anteriores
+
+        for (let evo of evolutions) {
+            const evoImage = await getPokemonImage(evo.name);
+            const evoCard = `
+                <div class="evolution-card text-center" style="width: 150px; margin: 10px;">
+                    <h6>${evo.name}</h6>
+                    <img src="${evoImage}" alt="${evo.name}" style="width: 100px;">
+                </div>
+            `;
+            evolutionContainer.append(evoCard);
+        }
+
+    } catch (err) {
+        console.error("Error al obtener evoluciones: " + err);
+    }
+}
+
+// Función para obtener las evoluciones de la cadena
+function getEvolutions(chain) {
+    let evolutions = [];
+    let currentChain = chain;
+
+    // Recorrer la cadena evolutiva
+    while (currentChain) {
+        evolutions.push({ name: currentChain.species.name });
+        currentChain = currentChain.evolves_to[0];
+    }
+
+    return evolutions;
+}
+
+// Función para obtener la imagen de un Pokémon
+async function getPokemonImage(name) {
+    const response = await $.ajax({
+        url: `https://pokeapi.co/api/v2/pokemon/${name}`,
+        method: "GET",
+        dataType: "json"
+    });
+    return response.sprites.front_default;
+}
+
+// Crear el gráfico de radar con las estadísticas del Pokémon
+function createRadarChart(stats) {
+    const labels = stats.map(stat => stat.stat.name);
+    const values = stats.map(stat => stat.base_stat);
+    
+    const ctx = document.getElementById('statRadarChart').getContext('2d');
+    
+    // Si ya existe un gráfico, destrúyelo
+    if (window.pokemonRadarChart) {
+        window.pokemonRadarChart.destroy();
+    }
+
+    // Crear un nuevo gráfico de radar
+    window.pokemonRadarChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Estadísticas',
+                data: values,
+                fill: true,
+                backgroundColor: 'rgba(34, 193, 195, 0.2)',
+                borderColor: 'rgba(34, 193, 195, 1)',
+                borderWidth: 1
+            }]
+        },
+        
+    });
+
+    // Ajustar el tamaño del canvas usando CSS (opcional)
+    $('#statRadarChart').css({
+        'width': '300px',
+        'height': '300px',
+        'background-color': '#f0f0f0'
+    });
+}
+
+
+// Crear una tarjeta de Pokémon
+function createCard(name, imgUrl) {
+    return $(`
+        <div class="card mb-4 g-4 bg-dark custom-card" style="width: 20rem; margin:5px;">
+            <div class="card-body bg-dark text-center">
+                <h5 class="card-title text-center my-4">${name}</h5>
+                <img src="${imgUrl}" alt="Imagen de ${name}" class="card-img-top">
+            </div>
+        </div>
+    `);
+}
+
+// Funciones adicionales para obtener los datos de los Pokémon y filtros (como antes)
+function getDatos() {
+    return $.ajax({
+        url: "https://pokeapi.co/api/v2/pokemon?offset=0&limit=100",
+        method: "GET",
+        dataType: "json"
+    });
+}
+
+function getImgPokemon(name) {
+    return $.ajax({
+        url: `https://pokeapi.co/api/v2/pokemon-form/${name}/`,
+        method: "GET",
+        dataType: "json"
+    });
 }
 
 // Crear una función para cargar filtros
@@ -133,5 +362,27 @@ function getFiltro(id) {
         url: `https://pokeapi.co/api/v2/type/${id}/`,
         method: "GET",
         dataType: "json"
+    });
+}
+
+// Función para filtrar Pokémon por nombre
+$(document).ready(function() {
+    // Al escribir en el campo de búsqueda
+    $('#searchPokemon').on('input', function() {
+        const searchText = $(this).val().toLowerCase();  // Obtener el texto de búsqueda
+        filterPokemonsByName(searchText);  // Llamar a la función para filtrar
+    });
+});
+
+// Filtrar las tarjetas de Pokémon por nombre
+function filterPokemonsByName(searchText) {
+    // Filtrar las tarjetas basadas en el nombre
+    $('#cardContent .card').each(function() {
+        const pokemonName = $(this).find('.card-title').text().toLowerCase();
+        if (pokemonName.includes(searchText)) {
+            $(this).show();  // Mostrar la tarjeta si el nombre coincide
+        } else {
+            $(this).hide();  // Ocultar la tarjeta si no coincide
+        }
     });
 }
