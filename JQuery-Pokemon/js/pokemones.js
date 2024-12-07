@@ -207,17 +207,29 @@ function createRadarChart(stats) {
                 fill: true,
                 backgroundColor: 'rgba(34, 193, 195, 0.2)',
                 borderColor: 'rgba(34, 193, 195, 1)',
+                fontColor: 'white',
                 borderWidth: 1
             }]
         },
-        
+        options: {
+            scales: {
+                r: {
+                    grid: {
+                        color: 'rgba(255, 255, 255, 0.1)',
+                    },
+                    angleLines: {
+                        color: 'rgba(255, 255, 255, 0.1)',
+                    },
+
+                }
+            }
+        }
     });
 
     // Ajustar el tamaño del canvas usando CSS (opcional)
     $('#statRadarChart').css({
         'width': '300px',
         'height': '300px',
-        'background-color': '#f0f0f0'
     });
 }
 
@@ -237,7 +249,7 @@ function createCard(name, imgUrl) {
 // Funciones adicionales para obtener los datos de los Pokémon y filtros (como antes)
 function getDatos() {
     return $.ajax({
-        url: "https://pokeapi.co/api/v2/pokemon?offset=0&limit=100",
+        url: "https://pokeapi.co/api/v2/pokemon?offset=0&limit=200",
         method: "GET",
         dataType: "json"
     });
@@ -329,33 +341,6 @@ function getFiltroByUrl(url) {
     });
 }
 
-// Crear una tarjeta
-function createCard(name, imgUrl) {
-    return $(`
-        <div class="card mb-4 g-4 bg-dark custom-card" style="width: 20rem; margin:5px;">
-            <div class="card-body bg-dark text-center">
-                <h5 class="card-title text-center my-4">${name}</h5>
-                <img src="${imgUrl}" alt="Imagen de ${name}" class="card-img-top">
-            </div>
-        </div>
-    `);
-}
-
-function getDatos() {
-    return $.ajax({
-        url: "https://pokeapi.co/api/v2/pokemon?offset=0&limit=100",
-        method: "GET",
-        dataType: "json"
-    });
-}
-
-function getImgPokemon(name) {
-    return $.ajax({
-        url: `https://pokeapi.co/api/v2/pokemon-form/${name}/`,
-        method: "GET",
-        dataType: "json"
-    });
-}
 
 function getFiltro(id) {
     return $.ajax({
