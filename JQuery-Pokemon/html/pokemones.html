@@ -25,18 +25,21 @@
         </div>
 
         <!-- Filtro por tipo -->
-        <div class="d-flex align-content-center">
+        <div class="d-flex justify-content-center">
             <div class="dropdown mb-5">
                 <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown"
                     id="filterDropdown">
                     Filtrar por tipo
                 </button>
+
+                <button id="jqueryMethodsBtn" class="btn btn-dark">Interactuar con jQuery</button>
                 <div class="dropdown-menu bg-dark" id="dropdownMenu">
                     <!-- Los filtros se cargarán dinámicamente aquí -->
                 </div>
             </div>
         </div>
 
+        
         <!-- Contenedor donde se insertarán las tarjetas -->
         <div id="cardContent" class="row row-cols-1 row-cols-md-4 row-cols-lg-4 g-4">
             <!-- Las tarjetas se generarán aquí dinámicamente -->

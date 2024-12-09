@@ -226,7 +226,7 @@ function createRadarChart(stats) {
         }
     });
 
-    // Ajustar el tamaño del canvas usando CSS (opcional)
+    // Ajustar el tamaño del canvas usando CSS
     $('#statRadarChart').css({
         'width': '300px',
         'height': '300px',
@@ -239,8 +239,8 @@ function createCard(name, imgUrl) {
     return $(`
         <div class="card mb-4 g-4 bg-dark custom-card" style="width: 20rem; margin:5px;">
             <div class="card-body bg-dark text-center">
-                <h5 class="card-title text-center my-4">${name}</h5>
-                <img src="${imgUrl}" alt="Imagen de ${name}" class="card-img-top">
+                <h5 class="card-title text-center my-4" id="cardTitle">${name}</h5>
+                <img src="${imgUrl}" alt="Imagen de ${name}" class="card-img-top" id="cardImage">
             </div>
         </div>
     `);
@@ -371,3 +371,18 @@ function filterPokemonsByName(searchText) {
         }
     });
 }
+
+$(document).ready(function () {
+    $('#jqueryMethodsBtn').click(function () {
+        // Obtener el valor del input
+        const inputValue = $('#searchPokemon').val();
+        const title = $('#cardTitle').text();
+        const imageHTML = $('#cardTitle').html();
+
+        // Mostrar en alerta el valor actual
+        alert("Busqueda: " + inputValue);
+        alert("Título de la tarjeta: " + title);
+        alert("Título de la tarjeta en HTML: " + imageHTML);
+
+    });
+});

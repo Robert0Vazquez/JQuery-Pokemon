@@ -23,6 +23,7 @@ $(document).ready(function () {
             { texto: "Evoluciones", ruta: "evoluciones.html" },
             { texto: "Juegos", ruta: "juegos.html" },
             { texto: "Berries", ruta: "berries.html" },
+            { texto: "Jquery", ruta: "jquery.html" },
         ]);
     } else if (path.includes("evoluciones.html")) {
         $logoImg.attr('src', '../logoBueno.png');
@@ -31,6 +32,7 @@ $(document).ready(function () {
             { texto: "Pokémons", ruta: "pokemones.html" },
             { texto: "Juegos", ruta: "juegos.html" },
             { texto: "Berries", ruta: "berries.html" },
+            { texto: "Jquery", ruta: "jquery.html" },
         ]);
     } else if (path.includes("juegos.html")) {
         $logoImg.attr('src', '../logoBueno.png');
@@ -39,6 +41,7 @@ $(document).ready(function () {
             { texto: "Pokémons", ruta: "pokemones.html" },
             { texto: "Evoluciones", ruta: "evoluciones.html" },
             { texto: "Berries", ruta: "berries.html" },
+            { texto: "Jquery", ruta: "jquery.html" },
         ]);
     } else if (path.includes("berries.html")) {
         $logoImg.attr('src', '../logoBueno.png');
@@ -47,7 +50,17 @@ $(document).ready(function () {
             { texto: "Pokémons", ruta: "pokemones.html" },
             { texto: "Evoluciones", ruta: "evoluciones.html" },
             { texto: "Juegos", ruta: "juegos.html" },
+            { texto: "Jquery", ruta: "jquery.html" },
         ]);
+    } else if (path.includes("jquery.html")) {
+        $logoImg.attr('src', '../logoBueno.png');
+        agregarBotones($ul, [
+            { texto: "Inicio", ruta: "../index.html" },
+            { texto: "Pokémons", ruta: "pokemones.html" },
+            { texto: "Evoluciones", ruta: "evoluciones.html" },
+            { texto: "Jquery", ruta: "berries.html" },
+            { texto: "Juegos", ruta: "juegos.html" },
+        ]); 
     } else {
         $logoImg.attr('src', 'logoBueno.png');
         agregarBotones($ul, [
@@ -55,6 +68,7 @@ $(document).ready(function () {
             { texto: "Evoluciones", ruta: "html/evoluciones.html" },
             { texto: "Juegos", ruta: "html/juegos.html" },
             { texto: "Berries", ruta: "html/berries.html" },
+            { texto: "Jquery", ruta: "html/jquery.html" },
         ]);
     }
 
