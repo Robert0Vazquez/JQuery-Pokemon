@@ -16,9 +16,46 @@
 
 <body class="bg-dark">
 
+
+
+
+    <!-- Contenedor donde esta la img principal -->
+    <div class="d-flex justify-content-center align-items-center vh-100 position-relative">
+
+        <!-- Contenedor donde esta la aleta de bienvenida -->
+        <div class="alert alert-dark alert-dismissible my-4" id="alertMsjBienvenida">
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            <strong>Pokémon Go!</strong> Aqui podras encontrar informacion de los Pokémons.
+            <!-- <table id="tableMiembros" class="table table-striped table-dark text-center">
+            <caption class="h5 text-center caption-top text-dark">Desarrolladores</caption>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                </tr>
+            </thead>
+    
+            <tbody>
+                <tr>
+                    <td>Omar</td>
+                    <td>Tox</td>
+                </tr>
+                <tr>
+                    <td>Roberto</td>
+                    <td>Vazquez</td>
+                </tr>
+            </tbody>
+        </table> -->
+        </div>
+
+        <img src="./gif/charizard.jpg" alt="evolucion" width="100%" height="100%" class="charizard">
+        <img src="./gif/red_fire.png" alt="fire" class="fire">
+    </div>
+
+    <!-- Contenedor donde esta la alerta de desarolladores -->
     <div class="alert alert-dark alert-dismissible my-4" id="alertMsj">
         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        <strong>Pokémon Go!</strong> Aqui podras encontrar informacion de los Pokémons.
+        <strong>Desarrolladores!</strong> Esta pagina fue desarrollada por:
         <table id="tableMiembros" class="table table-striped table-dark text-center">
             <caption class="h5 text-center caption-top text-dark">Desarrolladores</caption>
             <thead>
@@ -39,12 +76,6 @@
                 </tr>
             </tbody>
         </table>
-    </div>
-
-
-    <div class="d-flex justify-content-center align-items-center vh-100 position-relative">
-        <img src="./gif/charizard.jpg" alt="evolucion" width="100%" height="100%" class="charizard">
-        <img src="./gif/red_fire.png" alt="fire" class="fire">
     </div>
 </body>
 

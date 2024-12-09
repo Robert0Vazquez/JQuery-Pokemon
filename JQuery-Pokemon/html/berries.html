@@ -11,11 +11,29 @@
     <link rel="icon" href="../pokemon-symbol.png">
     <script src="../js/menu.js"></script>
     <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/berries.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
 
 <body class="bg-dark">
     <div class="container">
-        <h1 class="text-center mb-5 my-5 text-white">Pokémones</h1>
+        <h1 class="text-center mb-5 my-5 text-white">Berries</h1>
+
+        <!-- Filtro de búsqueda -->
+        <div class="d-flex mb-5">
+            <input type="text" id="searchBerrie" class="form-control" placeholder="Buscar Pokémon" />
+        </div>
+
+        <!-- Filtro por tipo -->
+        <div class="dropdown mb-5 ">
+            <button type="button" class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" id="filterDropdown">
+                Filtrar por tipo
+            </button>
+            <div class="dropdown-menu bg-dark" id="dropdownMenu">
+                <!-- Los filtros se cargarán dinámicamente aquí -->
+            </div>
+        </div>
 
         <!-- Contenedor donde se insertarán las tarjetas -->
         <div id="cardContent" class="row row-cols-1 row-cols-md-4 row-cols-lg-4 g-4">

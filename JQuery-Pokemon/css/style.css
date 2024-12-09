@@ -76,3 +76,26 @@
     color: black; /* Cambia el color del texto a negro */
     background-color: #343a40; /* Opcional: cambia el fondo para resaltar */
 }
+
+/* --------------------------------------------------- */
+/* Ocultar tabla */
+/* --------------------------------------------------- */
+/* Ocultar la tabla por defecto */
+#alertMsjBienvenida {
+    position: absolute;
+    bottom: 25%; /* Ajusta la distancia desde la parte inferior */
+    left: 60%; /* Ajusta la distancia desde la izquierda */
+    width: 35%; /* Ajusta el tamaño del fuego */
+    height: auto;
+    
+    border-top: 0px;
+    padding: 10px;
+    border-radius: 10px;
+}
+#alertMsj {
+    padding: 10px;
+    border-radius: 5px;
+}
+#tableMiembros {
+    display: none;
+}

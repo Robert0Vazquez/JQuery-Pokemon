@@ -4,6 +4,6 @@ $(document).ready(function () {
 
 function myfunction() {
     $("#alertMsj").click(function () {
-        $("#tableMiembros").slideToggle();
+        $("#tableMiembros").slideToggle("slow");
     });
 }
