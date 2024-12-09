@@ -6,6 +6,7 @@ $(document).ready(function () {
     let $logoImg = $('<img>', { width: 100, height: 50, alt: 'Logo' });
     let $ul = $('<ul>', { class: 'navbar-nav ms-auto' }); // Alinear a la derecha
 
+
     // Agregar los elementos al DOM
     $logoLink.append($logoImg);
     $container.append($logoLink, $ul);
@@ -60,7 +61,7 @@ $(document).ready(function () {
             { texto: "Evoluciones", ruta: "evoluciones.html" },
             { texto: "Jquery", ruta: "berries.html" },
             { texto: "Juegos", ruta: "juegos.html" },
-        ]); 
+        ]);
     } else {
         $logoImg.attr('src', 'logoBueno.png');
         agregarBotones($ul, [
@@ -84,5 +85,44 @@ $(document).ready(function () {
             $li.append($a);
             $ulElement.append($li);
         });
+
+
+        // Agregar botón de música
+        let $liMusica = $('<li>', { class: 'nav-item' });
+        let $botonMusica = $('<button>', { class: 'btn btn-link nav-link', html: '🎵', title: 'Activar/Desactivar música' });
+        $liMusica.append($botonMusica);
+        $ulElement.append($liMusica);
+
+        // Configuración de la música
+        const audio = new Audio("./musica/intro.mp3");
+        audio.loop = true;
+
+        $botonMusica.on('click', function () {
+            if (audio.paused) {
+                audio.play();
+                $botonMusica.html('🔇'); // Cambiar ícono
+            } else {
+                audio.pause();
+                $botonMusica.html('🎵'); // Cambiar ícono
+            }
+        });
     }
+
+    if (path.includes("index.html")) {
+        // Efecto de animación para los enlaces
+        $('a').on('click', function (e) {
+            e.preventDefault();
+
+            var link = $(this).attr('href');
+
+            $('body').fadeOut(1000, function () {
+                window.location = link;
+            });
+        });
+
+    }
+
+
 });
+
+

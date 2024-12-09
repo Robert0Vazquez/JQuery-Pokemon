@@ -2,7 +2,15 @@ $(document).ready(function () {
     myfunction();
     loadFilters(); // Cargar los filtros al iniciar
     createPokemonModal(); // Crear el modal al cargar la página
+    ejemploJquery();
 });
+
+//Jquery Effects
+function ejemploJquery() {
+    $("#filterDropdown").click(function () {
+        $("#dropdownMenu").fadeToggle(1000);
+    });    
+}
 
 // Crear el modal de Pokémon con JavaScript
 function createPokemonModal() {

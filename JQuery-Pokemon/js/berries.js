@@ -2,7 +2,18 @@ $(document).ready(function () {
     myfunction();
     loadFilters();
     createBerrieModal(); // Crear el modal al cargar la página
+    ejemploJquery();
 });
+
+function ejemploJquery() {
+    $("#filterDropdown").click(function () {
+        $("#dropdownMenu").slideToggle(1000);
+    });
+
+    $("#stopFiltro").click(function () {
+        $("#dropdownMenu").stop();
+    });
+}
 
 // Crear el modal de Berrie con JavaScript
 function createBerrieModal() {
